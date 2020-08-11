@@ -1,0 +1,35 @@
+@import '~bootstrap/scss/bootstrap.scss';
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&display=swap');
+
+$primaryColor: #777;
+
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+*:focus {
+  outline: none !important;
+}
+
+html {
+  font-size: 62.5% !important;
+}
+
+body {
+  font-family: 'Nunito Sans', sans-serif;
+  font-weight: 400;
+  line-height: 1.7;
+  color: $primaryColor;
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none !important;
+  color: $primaryColor;
+}
+
+ul, li {
+  list-style: none !important;
+}
