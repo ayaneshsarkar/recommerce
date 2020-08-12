@@ -1,7 +1,7 @@
 import React from 'react';
 import '../../scss/admin.scss';
 
-const Sidebar = () => {
+const Sidebar = ({toggleActive}) => {
   return (
     <div className="sidebar_menu">
       <div className="sidebar_menu__inner">
@@ -12,9 +12,23 @@ const Sidebar = () => {
               <span className="list">Dashboard</span>
             </a>
           </li>
+
+          <li>
+            <a href="/">
+              <span className="icon"><i class="far fa-list-alt"></i></span>
+              <span className="list">Add Category</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="/">
+              <span className="icon"><i class="fas fa-book"></i></span>
+              <span className="list">Add Book</span>
+            </a>
+          </li>
         </ul>
 
-        <div onClick={(e) => (console.log(e.target))} className="hamberger">
+        <div onClick={toggleActive} className="hamberger">
           <div className="hamberger_inner">
             <span className="arrow" style={{ marginTop: '0.3px' }}>
               <i className="fas fa-long-arrow-alt-left toggledLeft"></i>
@@ -25,7 +39,8 @@ const Sidebar = () => {
         </div>
       </div>
     </div>
-  )
+  );
+
 }
 
 
