@@ -22,8 +22,9 @@ class AddCategory extends Component {
       this.props.createCat(category);
       console.log(category);
       this.setState({ category: '' });
+      this.props.history.push('/admin/viewcategories');
     } else {
-      this.props.history.push('/admin');
+      this.props.history.push('/admin/viewcategories');
     }
   }
 
@@ -31,7 +32,7 @@ class AddCategory extends Component {
     return (
       <div className="container">
         <div className="col-12">
-          <h3 className="form_title mb-4">Add Book Category</h3>
+          <h3 className="form_title mb-5">Add Book Category</h3>
         </div>
 
         <div className="col-12">

@@ -15,6 +15,18 @@ const catReducer = (state = initState, action) => {
     case 'TEST_ERROR':
       console.log('TEST ERROR', action.error);
       return state;
+    case 'DELETE_CAT_SUCCESS':
+      console.log('Category Delete Success');
+      return state;
+    case 'DELETE_CAT_ERROR':
+      console.log('Category Delete Error');
+      return action.error;
+    case 'UPDATE_CAT_SUCCESS':
+      console.log('Category Update Success');
+      return state;
+    case 'UPDATE_CAT_ERROR':
+      console.log('Category Update Error');
+      return action.error;
     default:
       return state;
   }

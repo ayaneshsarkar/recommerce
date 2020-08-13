@@ -8,6 +8,10 @@ $mainTransition: all 0.3s linear;
 $primaryBorder: 1px solid #616161;
 $primaryBorderDark: 1px solid #212121;
 $dangerColor: #D32F2F;
+$shadowLg: 0 1rem 3rem rgba(0,0,0,.175) !important;
+
+$theme: #00BCD4;
+$themeHover: #0097A7;
 
 *, *::before, *::after {
   margin: 0;
@@ -136,5 +140,48 @@ ul, li {
   .input_button {
     display: block;
     width: 100%;
+  }
+}
+
+.table {
+  box-shadow: $shadowLg;
+  border-radius: 5px !important;
+
+  a {
+    color: $theme;
+
+    &:link, &:visited, &:hover {
+      color: $themeHover;
+      transition: $mainTransition;
+    }
+
+    &.danger {
+      color: $dangerColor !important;
+
+      &:link, &:visited, &:hover {
+        color: $dangerColor;
+        transition: $mainTransition;
+      }
+    }
+  }
+
+  thead {
+    font-size: 1.9rem;
+    font-weight: 600;
+  }
+
+  tbody {
+    font-size: 1.7rem;
+    font-weight: 400;
+
+    td.danger {
+      color: $dangerColor !important;
+      cursor: pointer;
+
+      &:link, &:visited, &:hover {
+        color: $dangerColor;
+        transition: $mainTransition;
+      }
+    }
   }
 }

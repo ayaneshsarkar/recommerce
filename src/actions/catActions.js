@@ -26,4 +26,32 @@ export const getCat = (catText) => {
       dispatch({ type: 'TEST_ERROR', error });
     });
   }
-}
+};
+
+export const updateCat = (cat, id) => {
+  return (dispatch, getState, {getFirestore}) => {
+    const firestore = getFirestore();
+
+    firestore.collection('categories').doc(id).update({
+      ...cat,
+      updatedAt: new Date()
+    }).then(() => {
+      dispatch({ type: 'UPDATE_CAT_SUCCESS', status: 'success' });
+    }).catch(error => {
+      dispatch({ type: 'UPDATE_CAT_ERROR', error });
+    });
+  }
+};
+
+export const deleteCat = (catId) => {
+  return (dispatch, getState, {getFirestore}) => {
+    const firestore = getFirestore();
+
+    firestore.collection('categories').doc(catId).delete()
+      .then(() => {
+        dispatch({ type: 'DELETE_CAT_SUCCESS', status: 'deleted' });
+      }).catch(error => {
+        dispatch({ type: 'DELETE_CAT_ERROR', error });
+      });
+  }
+};

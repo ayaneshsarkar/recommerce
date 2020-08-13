@@ -5,6 +5,8 @@ import Sidebar from './Sidebar';
 import Admin from './Admin';
 import AddCategory from './AddCategory';
 import AddBook from './AddBook';
+import ViewCategories from './ViewCategories';
+import EditCategory from './EditCategory';
 import '../../scss/admin.scss';
 
 class Dashboard extends Component {
@@ -30,6 +32,8 @@ class Dashboard extends Component {
               <Route exact path="/admin" component={Admin} />
               <Route path="/admin/addcategory" component={AddCategory} />
               <Route path="/admin/addbook" component={AddBook} />
+              <Route path="/admin/viewcategories" component={ViewCategories} />
+              <Route path="/admin/editcategory/:id" component={EditCategory} />
             </Switch>
           </div>
         </div>

@@ -7,7 +7,7 @@ const rootReducer = combineReducers({
 
   firestore: firestoreReducer,
   firebase: firebaseReducer,
-  category: catReducer
+  categories: catReducer
 });
 
 export default rootReducer;

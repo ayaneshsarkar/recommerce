@@ -15,6 +15,13 @@ const Sidebar = ({toggleActive, location}) => {
           </li>
 
           <li>
+            <Link to="/admin/viewcategories" className={(location.pathname === '/admin/viewcategories') ? 'active' : ''}>
+              <span className="icon"><i className="fas fa-list-alt"></i></span>
+              <span className="list">View Categories</span>
+            </Link>
+          </li>
+
+          <li>
             <Link to="/admin/addcategory" className={(location.pathname === '/admin/addcategory') ? 'active' : ''}>
               <span className="icon"><i className="far fa-list-alt"></i></span>
               <span className="list">Add Category</span>
