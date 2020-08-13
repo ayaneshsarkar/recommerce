@@ -2,6 +2,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&display=swap');
 
 $primaryColor: #777;
+$primaryColorLight: #f5f5f5;
+$primaryColorDark: #212121;
+$mainTransition: all 0.3s linear;
+$primaryBorder: 1px solid #616161;
+$primaryBorderDark: 1px solid #212121;
+$dangerColor: #D32F2F;
 
 *, *::before, *::after {
   margin: 0;
@@ -11,6 +17,13 @@ $primaryColor: #777;
 
 *:focus {
   outline: none !important;
+}
+
+*::placeholder {
+  font-family: 'Nunito Sans', sans-serif;
+  font-weight: 300;
+  font-size: 1.5rem;
+  color: $primaryColor;
 }
 
 html {
@@ -36,4 +49,92 @@ a {
 
 ul, li {
   list-style: none !important;
+}
+
+
+
+.btn {
+  display: block;
+  width: 100%;
+  border: none;
+  outline: none;
+  padding: 1rem 2rem;
+  margin-bottom: 3rem;
+  font-family: inherit;
+  font-weight: 500;
+  font-size: 1.9rem;
+  line-height: inherit;
+  text-align: center;
+  text-transform: uppercase;
+  transition: $mainTransition;
+}
+
+.btn:hover {
+  cursor: pointer;
+}
+
+.btn-dark {
+  background-color: $primaryColorDark;
+  color: $primaryColorLight;
+  transition: $mainTransition;
+}
+
+.btn-dark:hover {
+  background-color: $dangerColor;
+}
+
+
+.mid_margin {
+  margin-bottom: 2.5rem;
+}
+
+.index-form {
+  width: 100%;
+}
+
+.inputbox {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  label {
+    font-size: 1.6rem;
+    color: $primaryColor;
+    font-weight: 300;
+    margin-bottom: 0.7rem;
+  }
+
+  input {
+    font-family: inherit;
+    font-size: 1.6rem;
+    font-weight: 400;
+    padding: 1.7rem 2rem;
+    border: $primaryBorder;
+    transition: $mainTransition;
+
+    &:focus, &:active {
+      border: $primaryBorderDark;
+    }
+  }
+
+  .error {
+    display: block;
+    padding: 0.5rem 0;
+    font-size: 1.3rem;
+    font-weight: 300;
+    color: $dangerColor;
+  }
+
+  .activeError {
+    display: block;
+    padding: 0.5rem 0;
+    font-size: 1.3rem;
+    font-weight: 300;
+    color: $dangerColor;
+  }
+
+  .input_button {
+    display: block;
+    width: 100%;
+  }
 }

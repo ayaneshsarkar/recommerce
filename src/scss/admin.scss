@@ -37,6 +37,7 @@ $shadowLg: 0 1rem 3rem rgba(0,0,0,.175) !important;
       border-bottom: $whiteBorder;
       transition: $mainTransition;
       text-align: center;
+      letter-spacing: 0.7rem;
 
       a {
         display: block;
@@ -148,6 +149,7 @@ $shadowLg: 0 1rem 3rem rgba(0,0,0,.175) !important;
       ul li a.active {
         background-color: $themeHover;
         color: #fff;
+        transition: $mainTransition;
       }
 
       .hamberger {
@@ -299,6 +301,18 @@ $shadowLg: 0 1rem 3rem rgba(0,0,0,.175) !important;
 
   }
 }
+
+.form_title {
+  font-family: inherit;
+  font-size: 4.5rem;
+  font-weight: 300;
+  transition: $mainTransition;
+}
+
+
+
+
+
 
 .wrapper.active {
 

@@ -1,20 +1,22 @@
 import React, {Fragment} from 'react';
+import {Link, withRouter} from 'react-router-dom';
 import '../../scss/admin.scss';
 
-const Navbar = () => {
+const Navbar = (props) => {
+
   return (
     <Fragment>
       <div className="top_navbar">
         <div className="adminLogo">
-          <a href="/">ReCommerce</a>
+          <Link to="/admin">ReCommerce</Link>
         </div>
         
         <div className="top_menu">
           <div className="home_link">
-            <a href="/">
+            <Link to="/admin">
               <span className="icon mr-2"><i className="fa fa-home"></i></span>
               <span>Home</span>
-            </a>
+            </Link>
           </div>
 
           <div className="right_info">
@@ -36,4 +38,4 @@ const Navbar = () => {
 }
 
 
-export default Navbar;
+export default withRouter(Navbar);

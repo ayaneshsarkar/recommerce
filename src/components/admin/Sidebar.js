@@ -1,30 +1,31 @@
 import React from 'react';
+import {Link, withRouter} from 'react-router-dom';
 import '../../scss/admin.scss';
 
-const Sidebar = ({toggleActive}) => {
+const Sidebar = ({toggleActive, location}) => {
   return (
     <div className="sidebar_menu">
       <div className="sidebar_menu__inner">
         <ul>
           <li>
-            <a href="/" className="active">
+            <Link to="/admin" className={(location.pathname === '/admin') ? 'active' : ''}>
               <span className="icon"><i className="fas fa-tachometer-alt"></i></span>
               <span className="list">Dashboard</span>
-            </a>
+            </Link>
           </li>
 
           <li>
-            <a href="/">
-              <span className="icon"><i class="far fa-list-alt"></i></span>
+            <Link to="/admin/addcategory" className={(location.pathname === '/admin/addcategory') ? 'active' : ''}>
+              <span className="icon"><i className="far fa-list-alt"></i></span>
               <span className="list">Add Category</span>
-            </a>
+            </Link>
           </li>
 
           <li>
-            <a href="/">
-              <span className="icon"><i class="fas fa-book"></i></span>
+            <Link to="/admin/addbook" className={(location.pathname === '/admin/addbook') ? 'active' : ''}>
+              <span className="icon"><i className="fas fa-book"></i></span>
               <span className="list">Add Book</span>
-            </a>
+            </Link>
           </li>
         </ul>
 
@@ -44,4 +45,4 @@ const Sidebar = ({toggleActive}) => {
 }
 
 
-export default Sidebar;
+export default withRouter(Sidebar);
