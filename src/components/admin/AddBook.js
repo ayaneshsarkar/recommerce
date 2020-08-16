@@ -1,11 +1,32 @@
-import React, { Component } from 'react';
+import React, { Component, createRef } from 'react';
 
 class AddBook extends Component {
 
   state = {
     title: '',
     author: '',
+    publishDate: '',
+    bookImage: ''
+  }
 
+  bookImageInput = createRef();
+  bookInput = createRef();
+  imgPreview = createRef();
+
+  imageClick = () => {
+    const bookImageInput = this.bookImageInput;
+    bookImageInput.current.click();
+  }
+
+  imgChange = (e) => {
+    const file = e.target.files[0];
+    if(file) {
+      console.log(e.target.value);
+      //eslint-disable-next-line
+      this.bookInput.current.value = e.target.value.match(/[\/\\]([\w\d\s\.\-\(\)]+)$/)[1];
+    } else {
+      this.bookInput.current.value = 'Choose An Image';
+    }
   }
 
   inputChange = () => {
@@ -43,6 +64,19 @@ class AddBook extends Component {
             <div className="inputbox">
               <label htmlFor="publishDate">Publish Date</label>
               <input value={this.state.publishDate} onChange={this.inputChange} type="text" id="publishDate" placeholder="Publish Date" />
+              <div className="mid_margin"></div>
+            </div>
+
+            {/* BOOK IMAGE */}
+            <div className="inputbox">
+              <label htmlFor="bookImage">Book Image</label>
+              <input type="file" ref={this.bookImageInput} onChange={this.imgChange} className="hidden" id="bookImage" />
+              <div className="imageBox">
+                <span onClick={this.imageClick} className="imageClip mb-3"><i className="fas fa-paperclip"></i></span>
+                <input type="text" ref={this.bookInput} readOnly value="Choose An Image" className="mb-3" />
+              </div>
+
+              <img className="img-fluid inputPre" src="" alt="" ref={this.imgPreview} />
               <div className="mid_margin"></div>
             </div>
 
