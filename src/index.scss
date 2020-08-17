@@ -125,7 +125,7 @@ ul, li {
 
   .inputPre {
     width: 30rem;
-    height: 15rem;
+    min-height: 10rem;
     border: $primaryBorderDark;
   }
 
@@ -137,7 +137,7 @@ ul, li {
     pointer-events: none;
   }
 
-  input {
+  input, textarea {
     font-family: inherit;
     font-size: 1.6rem;
     font-weight: 400;
@@ -153,6 +153,10 @@ ul, li {
     &:focus, &:active {
       border: $primaryBorderDark;
     }
+  }
+
+  textarea {
+    resize: none;
   }
 
   .error {
@@ -218,5 +222,40 @@ ul, li {
         transition: $mainTransition;
       }
     }
+  }
+}
+
+
+.react-datepicker-wrapper {
+
+  input {
+    width: 100% !important;
+  }
+}
+
+.react-datepicker {
+  font-family: 'Nunito Sans', sans-serif !important;
+  font-weight: 400 !important;
+  font-size: 1.6rem !important;
+  width: 100% !important;
+
+  &__header {
+    background-color: #fff !important;
+  }
+
+  &__current-month {
+    color: $primaryColorDark !important;
+    font-size: 1.7rem !important;
+    font-weight: 600 !important;
+  }
+
+  &__day-name, &__day, &__time-name {
+    width: 5rem !important;
+    margin: 0.3rem
+  }
+
+  &__month-container {
+    width: 100%;
+    background-color: #fff;;
   }
 }

@@ -1,12 +1,17 @@
 import React, { Component, createRef } from 'react';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker-cssmodules.min.css';
+import 'react-datepicker/dist/react-datepicker.min.css';
+import DateWrapper from './DateWrapper';
 
 class AddBook extends Component {
 
   state = {
     title: '',
     author: '',
-    publishDate: '',
-    bookImage: ''
+    publishDate: null,
+    bookImage: '',
+    bookImageAlt: 'Choose An Image'
   }
 
   bookImageInput = createRef();
@@ -22,15 +27,26 @@ class AddBook extends Component {
     const file = e.target.files[0];
     if(file) {
       console.log(e.target.value);
-      //eslint-disable-next-line
-      this.bookInput.current.value = e.target.value.match(/[\/\\]([\w\d\s\.\-\(\)]+)$/)[1];
-    } else {
-      this.bookInput.current.value = 'Choose An Image';
+      this.setState({
+        bookImage: URL.createObjectURL(e.target.files[0]),
+        //eslint-disable-next-line
+        bookImageAlt: e.target.value.match(/[\/\\]([\w\d\s\.\-\(\)]+)$/)[1]
+      });
+      console.log(this.state.bookImage);
     }
   }
 
-  inputChange = () => {
-    console.log('yes');
+  inputChange = (e) => {
+    this.setState({
+      [e.target.id]: e.target.value
+    });
+  }
+
+  dateChange = (date) => {
+    this.setState({
+      publishDate: date
+    });
+    console.log(this.state);
   }
 
   formSubmit = () => {
@@ -63,7 +79,22 @@ class AddBook extends Component {
             {/* PUBLISH DATE */}
             <div className="inputbox">
               <label htmlFor="publishDate">Publish Date</label>
-              <input value={this.state.publishDate} onChange={this.inputChange} type="text" id="publishDate" placeholder="Publish Date" />
+
+              <DatePicker id="publishDate"
+                selected={this.state.publishDate}
+                className="e-custom-style"
+                placeholder="Enter Date"
+                dateFormat="dd/MM/yyyy"
+                placeholderText="DD/MM/YYYY"
+                showMonthDropdown
+                showYearDropdown
+                scrollableMonthYearDropdown
+                scrollableYearDropdown
+                dropdownMode="select"
+                calendarContainer={DateWrapper}
+                onSelect={(date) => this.dateChange(date)} 
+              />
+
               <div className="mid_margin"></div>
             </div>
 
@@ -73,10 +104,17 @@ class AddBook extends Component {
               <input type="file" ref={this.bookImageInput} onChange={this.imgChange} className="hidden" id="bookImage" />
               <div className="imageBox">
                 <span onClick={this.imageClick} className="imageClip mb-3"><i className="fas fa-paperclip"></i></span>
-                <input type="text" ref={this.bookInput} readOnly value="Choose An Image" className="mb-3" />
+                <input type="text" ref={this.bookInput} readOnly value={this.state.bookImageAlt} className="mb-3" />
               </div>
 
-              <img className="img-fluid inputPre" src="" alt="" ref={this.imgPreview} />
+              <img className="inputPre" src={this.state.bookImage} alt={this.state.title} ref={this.imgPreview} />
+              <div className="mid_margin"></div>
+            </div>
+
+            {/* DESCRIPTION */}
+            <div className="inputbox">
+              <label htmlFor="description">Description</label>
+              <textarea id="description" rows="5" placeholder="Description"></textarea>
               <div className="mid_margin"></div>
             </div>
 
