@@ -1,5 +1,6 @@
 import React, { Component, createRef } from 'react';
 import DatePicker from 'react-datepicker';
+import Select from 'react-select';
 import 'react-datepicker/dist/react-datepicker-cssmodules.min.css';
 import 'react-datepicker/dist/react-datepicker.min.css';
 import DateWrapper from './DateWrapper';
@@ -12,9 +13,15 @@ class AddBook extends Component {
     publishDate: null,
     bookImage: '',
     bookImageAlt: 'Choose An Image',
-    price: {online: 0, paperback: 0, hardcover: 0},
+    online: 0, paperback: 0, hardcover: 0,
     description: ''
   }
+
+  options = [
+    { value: 'chocolate', label: 'Chocolate' },
+    { value: 'strawberry', label: 'Strawberry' },
+    { value: 'vanilla', label: 'Vanilla' }
+  ];
 
   bookImageInput = createRef();
   bookInput = createRef();
@@ -47,14 +54,6 @@ class AddBook extends Component {
   dateChange = (date) => {
     this.setState({
       publishDate: date
-    });
-  }
-
-  priceChange = (e) => {
-    this.setState({
-      price: {
-        [e.target.id]: e.target.value
-      } 
     });
   }
 
@@ -130,7 +129,7 @@ class AddBook extends Component {
               <label htmlFor="online">Online Price</label>
               <div className="imageBox">
                 <span className="imageClip noCursor"><i className="fas fa-rupee-sign"></i></span>
-                <input onInput={this.priceChange} id="online" type="number" placeholder="Online Price" />
+                <input onInput={this.inputChange} id="online" type="number" placeholder="Online Price" />
               </div>
               <div className="mid_margin"></div>
             </div>
@@ -140,21 +139,30 @@ class AddBook extends Component {
               <label htmlFor="paperback">Paperback Price</label>
               <div className="imageBox">
                 <span className="imageClip noCursor"><i className="fas fa-rupee-sign"></i></span>
-                <input onInput={this.priceChange} id="paperback" type="number" placeholder="Paperback Price" />
+                <input onInput={this.inputChange} id="paperback" type="number" placeholder="Paperback Price" />
               </div>
               <div className="mid_margin"></div>
             </div>
+
 
             {/* Hardcover */}
             <div className="inputbox">
               <label htmlFor="hardcover">Hardcover Price</label>
               <div className="imageBox">
                 <span className="imageClip noCursor"><i className="fas fa-rupee-sign"></i></span>
-                <input onInput={this.priceChange} id="hardcover" type="number" placeholder="Hardcover Price" />
+                <input onInput={this.inputChange} id="hardcover" type="number" placeholder="Hardcover Price" />
               </div>
               <div className="mid_margin"></div>
             </div>
 
+            {/* Categories */}
+            <div className="inputbox">
+              <label htmlFor="categories">Categories</label>
+              <Select options={this.options} readOnly />
+              <div className="mid_margin"></div>
+            </div>
+            
+            
 
             {/* DESCRIPTION */}
             <div className="inputbox">

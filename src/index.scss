@@ -266,3 +266,32 @@ ul, li {
     background-color: #fff;;
   }
 }
+
+
+.css-2b097c-container {
+  .css-yk16xz-control {
+    border-radius: 0.1px !important;
+    border: $primaryBorder !important;
+  }
+
+  .css-1pahdxg-control {
+    border-radius: 0.1px !important;
+    border: $primaryBorderDark !important;
+    box-shadow: none !important;
+  }
+} 
+
+.css-g1d714-ValueContainer {
+  padding: 1.7rem 2rem !important;
+
+  .css-1uccc91-singleValue {
+    font-size: 1.6rem !important;
+  }
+
+  .css-1wa3eu0-placeholder {
+    font-family: 'Nunito Sans', sans-serif !important;
+    font-weight: 300 !important;
+    font-size: 1.5rem !important;
+    color: $primaryColor !important;
+  }
+}
