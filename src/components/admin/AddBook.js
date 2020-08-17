@@ -11,7 +11,9 @@ class AddBook extends Component {
     author: '',
     publishDate: null,
     bookImage: '',
-    bookImageAlt: 'Choose An Image'
+    bookImageAlt: 'Choose An Image',
+    price: {online: 0, paperback: 0, hardcover: 0},
+    description: ''
   }
 
   bookImageInput = createRef();
@@ -46,11 +48,20 @@ class AddBook extends Component {
     this.setState({
       publishDate: date
     });
-    console.log(this.state);
   }
 
-  formSubmit = () => {
-    console.log('yes');
+  priceChange = (e) => {
+    this.setState({
+      price: {
+        [e.target.id]: e.target.value
+      } 
+    });
+  }
+
+  formSubmit = (e) => {
+    e.preventDefault();
+    
+    console.log(this.state);
   }
 
   render() {
@@ -104,17 +115,51 @@ class AddBook extends Component {
               <input type="file" ref={this.bookImageInput} onChange={this.imgChange} className="hidden" id="bookImage" />
               <div className="imageBox">
                 <span onClick={this.imageClick} className="imageClip mb-3"><i className="fas fa-paperclip"></i></span>
-                <input type="text" ref={this.bookInput} readOnly value={this.state.bookImageAlt} className="mb-3" />
+                <input type="text" ref={this.bookInput} readOnly value={this.state.bookImageAlt} 
+                className="noCursor mb-3" />
               </div>
 
-              <img className="inputPre" src={this.state.bookImage} alt={this.state.title} ref={this.imgPreview} />
+              <img className="inputPre" src={this.state.bookImage} alt="" 
+              ref={this.imgPreview} />
               <div className="mid_margin"></div>
             </div>
+
+            {/* PRICES */}
+            {/* Online */}
+            <div className="inputbox">
+              <label htmlFor="online">Online Price</label>
+              <div className="imageBox">
+                <span className="imageClip noCursor"><i className="fas fa-rupee-sign"></i></span>
+                <input onInput={this.priceChange} id="online" type="number" placeholder="Online Price" />
+              </div>
+              <div className="mid_margin"></div>
+            </div>
+
+            {/* Paperback */}
+            <div className="inputbox">
+              <label htmlFor="paperback">Paperback Price</label>
+              <div className="imageBox">
+                <span className="imageClip noCursor"><i className="fas fa-rupee-sign"></i></span>
+                <input onInput={this.priceChange} id="paperback" type="number" placeholder="Paperback Price" />
+              </div>
+              <div className="mid_margin"></div>
+            </div>
+
+            {/* Hardcover */}
+            <div className="inputbox">
+              <label htmlFor="hardcover">Hardcover Price</label>
+              <div className="imageBox">
+                <span className="imageClip noCursor"><i className="fas fa-rupee-sign"></i></span>
+                <input onInput={this.priceChange} id="hardcover" type="number" placeholder="Hardcover Price" />
+              </div>
+              <div className="mid_margin"></div>
+            </div>
+
 
             {/* DESCRIPTION */}
             <div className="inputbox">
               <label htmlFor="description">Description</label>
-              <textarea id="description" rows="5" placeholder="Description"></textarea>
+              <textarea onChange={this.inputChange} id="description" rows="5" placeholder="Description"></textarea>
               <div className="mid_margin"></div>
             </div>
 

@@ -115,11 +115,18 @@ ul, li {
       transition: $mainTransition;
       color: #fff;
       cursor: pointer;
+
+      &.noCursor {
+        pointer-events: none;
+      }
     }
 
     input {
       width: 100%;
-      pointer-events: none;
+      
+      &.noCursor {
+        pointer-events: none;
+      }
     }
   }
 
