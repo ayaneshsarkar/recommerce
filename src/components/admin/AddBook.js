@@ -7,6 +7,7 @@ import {connect} from 'react-redux';
 import 'react-datepicker/dist/react-datepicker-cssmodules.min.css';
 import 'react-datepicker/dist/react-datepicker.min.css';
 import DateWrapper from './DateWrapper';
+import {createBook} from '../../actions/bookActions';
 
 class AddBook extends Component {
 
@@ -16,10 +17,12 @@ class AddBook extends Component {
     publishDate: null,
     bookImage: '',
     bookImageAlt: 'Choose An Image',
+    bookImageBlob: null,
     online: 0, paperback: 0, hardcover: 0,
     description: '',
     options: null,
-    categoryId: null
+    categoryId: null,
+    downloadURL: ''
   }
 
   capitalizeFirstLetter = (string) => {
@@ -35,6 +38,16 @@ class AddBook extends Component {
           }
         })
       })
+    }
+
+    if(this.props.url && !this.state.downloadURL) {
+      this.setState({
+        downloadURL: this.props.url
+      });
+    }
+
+    if(this.state.downloadURL) {
+      console.log(this.state.downloadURL);
     }
   }
 
@@ -64,13 +77,12 @@ class AddBook extends Component {
   imgChange = (e) => {
     const file = e.target.files[0];
     if(file) {
-      console.log(e.target.value);
       this.setState({
         bookImage: URL.createObjectURL(e.target.files[0]),
         //eslint-disable-next-line
-        bookImageAlt: e.target.value.match(/[\/\\]([\w\d\s\.\-\(\)]+)$/)[1]
+        bookImageAlt: e.target.value.match(/[\/\\]([\w\d\s\.\-\(\)]+)$/)[1],
+        bookImageBlob: e.target.files[0]
       });
-      console.log(this.state.bookImage);
     }
   }
 
@@ -99,16 +111,19 @@ class AddBook extends Component {
       title: this.state.title,
       author: this.state.author,
       publishDate: this.state.publishDate,
-      bookImage: this.state.bookImage,
+      bookURL: this.state.downloadURL,
       onlinePrice: this.state.online,
       paperbackPrice: this.state.paperback,
       hardcoverPrice: this.state.hardcover,
       categoryId: this.state.categoryId,
       description: this.state.description
     };
-    
+
     console.log(book);
+    
+    this.props.createBook(this.state.bookImage);
   }
+
 
   render() {
     return (
@@ -231,11 +246,18 @@ class AddBook extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    categories: state.firestore.ordered.categories
+    categories: state.firestore.ordered.categories,
+    url: state.books.url
+  }
+};
+
+const mapStateToDispatch = (dispatch) => {
+  return {
+    createBook: (file) => dispatch(createBook(file))
   }
 };
 
 
-export default compose(connect(mapStateToProps),
+export default compose(connect(mapStateToProps, mapStateToDispatch),
   firestoreConnect([{ collection: 'categories', orderBy: ['updatedAt', 'desc'] }])
 )(AddBook);
