@@ -1,6 +1,9 @@
 import React, { Component, createRef } from 'react';
 import DatePicker from 'react-datepicker';
 import Select from 'react-select';
+import {firestoreConnect} from 'react-redux-firebase';
+import {compose} from 'redux';
+import {connect} from 'react-redux';
 import 'react-datepicker/dist/react-datepicker-cssmodules.min.css';
 import 'react-datepicker/dist/react-datepicker.min.css';
 import DateWrapper from './DateWrapper';
@@ -14,18 +17,44 @@ class AddBook extends Component {
     bookImage: '',
     bookImageAlt: 'Choose An Image',
     online: 0, paperback: 0, hardcover: 0,
-    description: ''
+    description: '',
+    options: null,
+    categoryId: null
   }
 
-  options = [
-    { value: 'chocolate', label: 'Chocolate' },
-    { value: 'strawberry', label: 'Strawberry' },
-    { value: 'vanilla', label: 'Vanilla' }
-  ];
+  capitalizeFirstLetter = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
+  componentDidUpdate() {
+    if(this.state.options === null) {
+      this.setState({
+        options: this.props.categories.map(cat => {
+          return {
+            value: cat.id, label: this.capitalizeFirstLetter(cat.category)
+          }
+        })
+      })
+    }
+  }
 
   bookImageInput = createRef();
   bookInput = createRef();
   imgPreview = createRef();
+
+  customStyles = {
+    menu: (provided, state) => ({
+      ...provided,
+      fontSize: '1.6rem',
+      borderRadius: '0.1px',
+      color: '#777'
+    }),
+
+    option: (provided, state) => ({
+      ...provided,
+      padding: '1.7rem 2rem'
+    }),
+  }
 
   imageClick = () => {
     const bookImageInput = this.bookImageInput;
@@ -57,10 +86,28 @@ class AddBook extends Component {
     });
   }
 
+  catChange = categoryId => {
+    this.setState({
+      categoryId: categoryId.value
+    });
+  }
+
   formSubmit = (e) => {
     e.preventDefault();
+
+    const book = {
+      title: this.state.title,
+      author: this.state.author,
+      publishDate: this.state.publishDate,
+      bookImage: this.state.bookImage,
+      onlinePrice: this.state.online,
+      paperbackPrice: this.state.paperback,
+      hardcoverPrice: this.state.hardcover,
+      categoryId: this.state.categoryId,
+      description: this.state.description
+    };
     
-    console.log(this.state);
+    console.log(book);
   }
 
   render() {
@@ -144,7 +191,6 @@ class AddBook extends Component {
               <div className="mid_margin"></div>
             </div>
 
-
             {/* Hardcover */}
             <div className="inputbox">
               <label htmlFor="hardcover">Hardcover Price</label>
@@ -158,11 +204,11 @@ class AddBook extends Component {
             {/* Categories */}
             <div className="inputbox">
               <label htmlFor="categories">Categories</label>
-              <Select options={this.options} readOnly />
+              { this.state.options ? 
+              (<Select styles={this.customStyles} onChange={this.catChange} options={this.state.options} readOnly />) 
+              : '' }
               <div className="mid_margin"></div>
             </div>
-            
-            
 
             {/* DESCRIPTION */}
             <div className="inputbox">
@@ -183,5 +229,13 @@ class AddBook extends Component {
   }
 }
 
+const mapStateToProps = (state) => {
+  return {
+    categories: state.firestore.ordered.categories
+  }
+};
 
-export default AddBook;
+
+export default compose(connect(mapStateToProps),
+  firestoreConnect([{ collection: 'categories', orderBy: ['updatedAt', 'desc'] }])
+)(AddBook);

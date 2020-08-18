@@ -16,7 +16,7 @@ import firebaseConfig from './config/config';
 
 firebase.initializeApp(firebaseConfig);
 firebase.firestore();
-//firebase.storage();
+firebase.storage();
 
 const store = createStore(rootReducer, compose(
   applyMiddleware(thunk.withExtraArgument({getFirebase, getFirestore})),
