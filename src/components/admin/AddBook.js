@@ -7,7 +7,7 @@ import {connect} from 'react-redux';
 import 'react-datepicker/dist/react-datepicker-cssmodules.min.css';
 import 'react-datepicker/dist/react-datepicker.min.css';
 import DateWrapper from './DateWrapper';
-import {uploadBookFile, createBook} from '../../actions/bookActions';
+import {createBook} from '../../actions/bookActions';
 
 class AddBook extends Component {
 
@@ -17,13 +17,10 @@ class AddBook extends Component {
     publishDate: null,
     bookImage: '',
     bookImageAlt: 'Choose An Image',
-    bookImageBlob: null,
     online: 0, paperback: 0, hardcover: 0,
     description: '',
     options: null,
     categoryId: null,
-    downloadURL: '',
-    submitted: false
   }
 
   capitalizeFirstLetter = (string) => {
@@ -31,37 +28,14 @@ class AddBook extends Component {
   }
 
   componentDidUpdate() {
-    if(this.state.options === null) {
+    if(this.state.options === null && this.props.categories) {
       this.setState({
         options: this.props.categories.map(cat => {
           return {
             value: cat.id, label: this.capitalizeFirstLetter(cat.category)
           }
         })
-      })
-    }
-
-    if(this.props.url && !this.state.downloadURL && !this.state.submitted) {
-      this.setState({
-        downloadURL: this.props.url
       });
-    }
-
-    if(this.state.downloadURL) {
-      const book = {
-        title: this.state.title,
-        author: this.state.author,
-        publishDate: this.state.publishDate,
-        bookURL: this.state.downloadURL,
-        onlinePrice: this.state.online,
-        paperbackPrice: this.state.paperback,
-        hardcoverPrice: this.state.hardcover,
-        categoryId: this.state.categoryId,
-        description: this.state.description
-      };
-
-      this.props.createBook(book);
-      this.props.history.push('/admin');
     }
   }
 
@@ -120,8 +94,21 @@ class AddBook extends Component {
 
   formSubmit = (e) => {
     e.preventDefault();
+
+    const book = {
+      title: this.state.title,
+      author: this.state.author,
+      publishDate: this.state.publishDate,
+      prices: {
+        onlinePrice: this.state.online,
+        paperbackPrice: this.state.paperback,
+        hardcoverPrice: this.state.hardcover
+      },
+      description: this.state.description,
+      categoryId: this.state.categoryId
+    }
     
-    this.props.uploadBookFile(this.state.bookImage);
+    this.props.createBook(book, this.state.bookImage);
   }
 
 
@@ -253,8 +240,7 @@ const mapStateToProps = (state) => {
 
 const mapStateToDispatch = (dispatch) => {
   return {
-    uploadBookFile: (file) => dispatch(uploadBookFile(file)),
-    createBook: (book) => dispatch(createBook(book))
+    createBook: (book, file) => dispatch(createBook(book, file))
   }
 };
 
