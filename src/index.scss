@@ -220,6 +220,11 @@ ul, li {
     font-size: 1.7rem;
     font-weight: 400;
 
+    td img {
+      width: 5rem;
+      height: 7rem;
+    }
+
     td.danger {
       color: $dangerColor !important;
       cursor: pointer;

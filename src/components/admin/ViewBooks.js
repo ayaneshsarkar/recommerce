@@ -26,9 +26,9 @@ class ViewBooks extends Component {
             <tr key={book.id}>
               <td>{book.title}</td>
               <td>{book.author}</td>
-              <td>Image</td>
+              <td><img src={book.bookURL} alt={book.title}/></td>
               <td>{book.categoryId}</td>
-              <td>{moment(book.publishDate.toDate()).calendar()}</td>
+              <td>{moment(book.publishDate.toDate()).format('LL')}</td>
               <td>{moment(book.updatedAt.toDate()).fromNow()}</td>
             </tr>
           )
