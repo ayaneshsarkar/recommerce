@@ -4,6 +4,7 @@ import Select from 'react-select';
 import {firestoreConnect} from 'react-redux-firebase';
 import {compose} from 'redux';
 import {connect} from 'react-redux';
+import SimpleReactValidator from 'simple-react-validator';
 import 'react-datepicker/dist/react-datepicker-cssmodules.min.css';
 import 'react-datepicker/dist/react-datepicker.min.css';
 import DateWrapper from './DateWrapper';
@@ -17,7 +18,7 @@ class AddBook extends Component {
     publishDate: null,
     bookImage: '',
     bookImageAlt: 'Choose An Image',
-    online: 0, paperback: 0, hardcover: 0,
+    online: null, paperback: null, hardcover: null,
     description: '',
     options: null,
     categoryId: null,
@@ -42,6 +43,7 @@ class AddBook extends Component {
   bookImageInput = createRef();
   bookInput = createRef();
   imgPreview = createRef();
+  validator = new SimpleReactValidator();
 
   customStyles = {
     menu: (provided, state) => ({
@@ -68,8 +70,7 @@ class AddBook extends Component {
       this.setState({
         bookImage: URL.createObjectURL(e.target.files[0]),
         //eslint-disable-next-line
-        bookImageAlt: e.target.value.match(/[\/\\]([\w\d\s\.\-\(\)]+)$/)[1],
-        bookImageBlob: e.target.files[0]
+        bookImageAlt: e.target.value.match(/[\/\\]([\w\d\s\.\-\(\)]+)$/)[1]
       });
     }
   }
@@ -108,7 +109,13 @@ class AddBook extends Component {
       categoryId: this.state.categoryId
     }
     
-    this.props.createBook(book, this.state.bookImage);
+    if(this.validator.allValid()) {
+      this.props.createBook(book, this.state.bookImage);
+    } else {
+      this.validator.showMessages();
+      this.forceUpdate();
+    }
+    
   }
 
 
@@ -125,13 +132,16 @@ class AddBook extends Component {
             <div className="inputbox">
               <label htmlFor="title">Book Title</label>
               <input value={this.state.title} onChange={this.inputChange} type="text" id="title" placeholder="Book Title" />
+              {this.validator.message('title', this.state.title, 'required', {className: 'error'})}
               <div className="mid_margin"></div>
             </div>
+
 
             {/* AUTHOR FULLNAME */}
             <div className="inputbox">
               <label htmlFor="author">Author</label>
               <input value={this.state.author} onChange={this.inputChange} type="text" id="author" placeholder="Author Fullname" />
+              {this.validator.message('author', this.state.author, 'required', {className: 'error'})}
               <div className="mid_margin"></div>
             </div>
 
@@ -153,7 +163,7 @@ class AddBook extends Component {
                 calendarContainer={DateWrapper}
                 onSelect={(date) => this.dateChange(date)} 
               />
-
+              {this.validator.message('publish date', this.state.publishDate, 'required', {className: 'error'})}
               <div className="mid_margin"></div>
             </div>
 
@@ -169,6 +179,8 @@ class AddBook extends Component {
 
               <img className="inputPre" src={this.state.bookImage} alt="" 
               ref={this.imgPreview} />
+
+              {this.validator.message('book image', this.state.bookImage, 'required', {className: 'error'})}
               <div className="mid_margin"></div>
             </div>
 
@@ -180,6 +192,7 @@ class AddBook extends Component {
                 <span className="imageClip noCursor"><i className="fas fa-rupee-sign"></i></span>
                 <input onInput={this.inputChange} id="online" type="number" placeholder="Online Price" />
               </div>
+              {this.validator.message('online price', this.state.online, 'required', {className: 'error'})}
               <div className="mid_margin"></div>
             </div>
 
@@ -190,6 +203,7 @@ class AddBook extends Component {
                 <span className="imageClip noCursor"><i className="fas fa-rupee-sign"></i></span>
                 <input onInput={this.inputChange} id="paperback" type="number" placeholder="Paperback Price" />
               </div>
+              {this.validator.message('paperback price', this.state.paperback, 'required', {className: 'error'})}
               <div className="mid_margin"></div>
             </div>
 
@@ -200,6 +214,7 @@ class AddBook extends Component {
                 <span className="imageClip noCursor"><i className="fas fa-rupee-sign"></i></span>
                 <input onInput={this.inputChange} id="hardcover" type="number" placeholder="Hardcover Price" />
               </div>
+              {this.validator.message('hardcover price', this.state.hardcover, 'required', {className: 'error'})}
               <div className="mid_margin"></div>
             </div>
 
@@ -209,6 +224,7 @@ class AddBook extends Component {
               { this.state.options ? 
               (<Select styles={this.customStyles} onChange={this.catChange} options={this.state.options} readOnly />) 
               : '' }
+              {this.validator.message('category', this.state.categoryId, 'required', {className: 'error'})}
               <div className="mid_margin"></div>
             </div>
 
@@ -216,6 +232,7 @@ class AddBook extends Component {
             <div className="inputbox">
               <label htmlFor="description">Description</label>
               <textarea onChange={this.inputChange} id="description" rows="5" placeholder="Description"></textarea>
+              {this.validator.message('description', this.state.description, 'required', {className: 'error'})}
               <div className="mid_margin"></div>
             </div>
 
