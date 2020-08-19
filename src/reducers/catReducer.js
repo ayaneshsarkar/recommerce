@@ -9,10 +9,10 @@ const catReducer = (state = initState, action) => {
     case 'CREATE_CAT_ERROR':
       console.log('Category Create Error', action.error);
       return state;
-    case 'TEST_SUCCESS':
+    case 'GET_CAT_SUCCESS':
       console.log('Test Success');
       return action.data;
-    case 'TEST_ERROR':
+    case 'GET_CAT_ERROR':
       console.log('TEST ERROR', action.error);
       return state;
     case 'DELETE_CAT_SUCCESS':

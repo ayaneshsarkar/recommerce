@@ -29,6 +29,13 @@ const Sidebar = ({toggleActive, location}) => {
           </li>
 
           <li>
+            <Link to="/admin/viewbooks" className={(location.pathname === '/admin/viewbooks') ? 'active' : ''}>
+              <span className="icon"><i className="fas fa-book"></i></span>
+              <span className="list">View Books</span>
+            </Link>
+          </li>
+
+          <li>
             <Link to="/admin/addbook" className={(location.pathname === '/admin/addbook') ? 'active' : ''}>
               <span className="icon"><i className="fas fa-book"></i></span>
               <span className="list">Add Book</span>

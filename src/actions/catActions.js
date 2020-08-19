@@ -14,16 +14,16 @@ export const createCat = (cat) => {
   }
 };
 
-export const getCat = (catText) => {
+export const getCat = (id) => {
   return (dispatch, getState, {getFirestore}) => {
     const firestore = getFirestore();
 
-    firestore.collection('categories').where('category', '==', catText).get().then((snapshot) => {
+    firestore.collection('categories').where('id', '==', id).get().then((snapshot) => {
       snapshot.docs.forEach(doc => {
-        dispatch({ type: 'TEST_SUCCESS', data: doc.data() });
+        dispatch({ type: 'GET_CAT_SUCCESS', data: doc.data() });
       })
     }).catch(error => {
-      dispatch({ type: 'TEST_ERROR', error });
+      dispatch({ type: 'GET_CAT_ERROR', error });
     });
   }
 };

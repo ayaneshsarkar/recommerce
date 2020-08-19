@@ -6,6 +6,7 @@ import Admin from './Admin';
 import AddCategory from './AddCategory';
 import AddBook from './AddBook';
 import ViewCategories from './ViewCategories';
+import ViewBooks from './ViewBooks';
 import EditCategory from './EditCategory';
 import '../../scss/admin.scss';
 
@@ -33,6 +34,7 @@ class Dashboard extends Component {
               <Route path="/admin/addcategory" component={AddCategory} />
               <Route path="/admin/addbook" component={AddBook} />
               <Route path="/admin/viewcategories" component={ViewCategories} />
+              <Route path="/admin/viewbooks" component={ViewBooks} />
               <Route path="/admin/editcategory/:id" component={EditCategory} />
             </Switch>
           </div>
