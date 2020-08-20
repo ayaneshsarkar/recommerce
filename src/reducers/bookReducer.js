@@ -11,6 +11,11 @@ const bookReducer = (state = initState, action) => {
     case 'FILE_UPLOAD_ERROR':
       console.log('File Upload Error', action.error);
       return state;
+    case 'GET_BOOK_SUCCESS':
+      return action.data;
+    case 'GET_BOOK_ERROR':
+      console.log(action.error);
+      return action.error;
     default:
       return state;
   }

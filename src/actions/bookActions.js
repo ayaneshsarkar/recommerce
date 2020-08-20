@@ -26,3 +26,22 @@ export const createBook = (book, file) => {
     
   }
 }
+
+export const getBooks = () => {
+  return (dispatch, getState, {getFirestore}) => {
+    
+    const firestore = getFirestore();
+    const ref = firestore.collection('books');
+    //const catRef = firestore.collection('categories');
+
+    ref.get().then(snapshot => {
+      snapshot.docs.forEach(doc => {
+        dispatch({ type: 'GET_BOOK_SUCCESS', data: doc.data() });
+      });
+      
+    }).catch(error => {
+      dispatch({ type: 'GET_BOOK_ERROR', error });
+    });
+
+  }
+}

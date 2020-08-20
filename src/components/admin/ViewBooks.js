@@ -5,6 +5,7 @@ import {compose} from 'redux';
 //import {Link} from 'react-router-dom';
 import moment from 'moment';
 //import {getCat} from '../../actions/catActions';
+import {getBooks} from '../../actions/bookActions';
 
 class ViewBooks extends Component {
 
@@ -14,6 +15,13 @@ class ViewBooks extends Component {
 
   mapBooks = null;
 
+  componentDidMount() {
+    this.props.getBooks();
+  }
+
+  componentDidUpdate() {
+    console.log(this.props.stateBooks);
+  }
 
   render() {
 
@@ -94,11 +102,17 @@ class ViewBooks extends Component {
 const mapStatetoProps = (state) => {
   return {
     books: state.firestore.ordered.books,
-    categories: state.firestore.ordered.categories
+    stateBooks: state.books
+  }
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getBooks: () => dispatch(getBooks())
   }
 };
 
 
-export default compose(connect(mapStatetoProps),
+export default compose(connect(mapStatetoProps, mapDispatchToProps),
   firestoreConnect([{ collection: 'books', orderBy: ['updatedAt', 'desc'] }])
 )(ViewBooks);
