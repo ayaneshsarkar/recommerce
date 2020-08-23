@@ -71,7 +71,7 @@ class ViewBooks extends Component {
     return (
       <div className="container">
         <div className="col-12">
-          <h3 className="form_title mb-5">View Books</h3>
+          <h3 className="form_title mb-5">View All Books</h3>
         </div>
   
         {/* VIEW BOOKS TABLE */}
